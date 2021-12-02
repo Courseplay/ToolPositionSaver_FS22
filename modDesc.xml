@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" standalone="no" ?>
+<modDesc descVersion="62">
+    <version>1.0.0.0</version>
+	<author><![CDATA[Courseplay.devTeam]]></author>
+	<title>
+		<en>Working tool positions</en>
+	</title>
+
+    <description>
+        <en>Working tool positions</en>
+        <de>Working tool positions</de>
+    </description>
+
+	<iconFilename>icon_courseplay.dds</iconFilename>
+    <multiplayer supported="true" />
+	
+	<extraSourceFiles>
+	<!--	<sourceFile filename="InGameMenuExtended.lua"/> -->
+	</extraSourceFiles>
+
+	<specializations>
+        <specialization name="workingToolPositions"                   className="WorkingToolPositions"                   filename="WorkingToolPositions.lua" />
+    </specializations>
+
+	<inputBinding>
+		<actionBinding action="WTP_SET_OR_PLAY_POSITION">
+			<binding device="KB_MOUSE_DEFAULT" input="KEY_lctrl KEY_1" />
+		</actionBinding>
+		<actionBinding action="WTP_RESET_POSITION">
+			<binding device="KB_MOUSE_DEFAULT" input="KEY_lctrl KEY_2" />
+		</actionBinding>
+		<actionBinding action="WTP_CHANGE_POSITION">
+			<binding device="KB_MOUSE_DEFAULT" input="KEY_lctrl KEY_3" />
+		</actionBinding>
+    </inputBinding>	
+
+	<actions>
+		<action name="WTP_SET_OR_PLAY_POSITION" />
+		<action name="WTP_RESET_POSITION" />
+		<action name="WTP_CHANGE_POSITION" />
+	</actions>
+
+	<l10n>	
+		<text name="WTP_SET_POSITION"><de>WTP: Setze Position %d</de><en>WTP: Sets position %d</en></text>	
+		<text name="WTP_PLAY_POSITION"><de>WTP: Fahre Position %d an.</de><en>WTP: Plays to position %d.</en></text>	
+		<text name="WTP_RESET_POSITION"><de>WTP: Positionen %d zurücksetzen.</de><en>WTP: Resets positions %d.</en></text>
+		<text name="WTP_CHANGE_POSITION"><de>WTP: Ändert ausgewählte Position (aktuell %d)</de><en>WTP: Changes selected Position(current: %d).</en></text>
+		
+		<text name="input_WTP_SET_OR_PLAY_POSITION"><de>WTP: Anfahren oder Setzen einer Position.</de><en>WTP: Plays or sets a position.</en></text>	
+		<text name="input_WTP_RESET_POSITION"><de>WTP:Zurücksetzen einer Position.</de><en>WTP: Resets a position.</en></text>
+		<text name="input_WTP_CHANGE_POSITION"><de>WTP: Änderen der aktullen Position.</de><en>WTP: Changes current selected Position.</en></text>
+	</l10n>
+	
+</modDesc>
