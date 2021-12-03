@@ -22,33 +22,47 @@
         <specialization name="workingToolPositions"                   className="WorkingToolPositions"                   filename="WorkingToolPositions.lua" />
     </specializations>
 
-	<inputBinding>
-		<actionBinding action="WTP_SET_OR_PLAY_POSITION">
+		<inputBinding>
+		<actionBinding action="WTP_POSITION_1">
 			<binding device="KB_MOUSE_DEFAULT" input="KEY_lctrl KEY_1" />
 		</actionBinding>
-		<actionBinding action="WTP_RESET_POSITION">
+		<actionBinding action="WTP_POSITION_2">
 			<binding device="KB_MOUSE_DEFAULT" input="KEY_lctrl KEY_2" />
 		</actionBinding>
-		<actionBinding action="WTP_CHANGE_POSITION">
+		<actionBinding action="WTP_POSITION_3">
 			<binding device="KB_MOUSE_DEFAULT" input="KEY_lctrl KEY_3" />
+		</actionBinding>
+		<actionBinding action="WTP_POSITION_4">
+			<binding device="KB_MOUSE_DEFAULT" input="KEY_lctrl KEY_4" />
+		</actionBinding>
+		<actionBinding action="WTP_CHANGE_MODE">
+			<binding device="KB_MOUSE_DEFAULT" input="KEY_lctrl KEY_5" />
 		</actionBinding>
     </inputBinding>	
 
 	<actions>
-		<action name="WTP_SET_OR_PLAY_POSITION" />
-		<action name="WTP_RESET_POSITION" />
-		<action name="WTP_CHANGE_POSITION" />
+		<action name="WTP_POSITION_1" />
+		<action name="WTP_POSITION_2" />
+		<action name="WTP_POSITION_3" />
+		<action name="WTP_POSITION_4" />
+		<action name="WTP_CHANGE_MODE" />
 	</actions>
 
 	<l10n>	
 		<text name="WTP_SET_POSITION"><de>WTP: Setze Position %d</de><en>WTP: Sets position %d</en></text>	
 		<text name="WTP_PLAY_POSITION"><de>WTP: Fahre Position %d an.</de><en>WTP: Plays to position %d.</en></text>	
 		<text name="WTP_RESET_POSITION"><de>WTP: Positionen %d zurücksetzen.</de><en>WTP: Resets positions %d.</en></text>
-		<text name="WTP_CHANGE_POSITION"><de>WTP: Ändert ausgewählte Position (aktuell %d)</de><en>WTP: Changes selected Position(current: %d).</en></text>
+		<text name="WTP_MODE_SET_PLAY"><de>WTP: Ändert Modus(Setzen/anfahren).</de><en>WTP: Changes mode.</en></text>
+		<text name="WTP_MODE_RESET"><de>WTP: Ändert Modus(Zurücksetzen).</de><en>WTP: Changes mode.</en></text>
 		
-		<text name="input_WTP_SET_OR_PLAY_POSITION"><de>WTP: Anfahren oder Setzen einer Position.</de><en>WTP: Plays or sets a position.</en></text>	
-		<text name="input_WTP_RESET_POSITION"><de>WTP:Zurücksetzen einer Position.</de><en>WTP: Resets a position.</en></text>
-		<text name="input_WTP_CHANGE_POSITION"><de>WTP: Änderen der aktullen Position.</de><en>WTP: Changes current selected Position.</en></text>
+		<text name="WTP_MODE_CHANGED_TO_SET_PLAY"><de>WTP: Modus auf Setzen/anfahren geändert.</de><en>WTP: Changes mode.</en></text>
+		<text name="WTP_MODE_CHANGED_TO_RESET"><de>WTP: Modus auf reset geändert.</de><en>WTP: Changes mode.</en></text>
+
+		<text name="input_WTP_POSITION_1"><de>WTP: Anfahren oder Setzen der 1 Position.</de><en>WTP: Plays or sets the 1 position.</en></text>
+		<text name="input_WTP_POSITION_2"><de>WTP: Anfahren oder Setzen der 2 Position.</de><en>WTP: Plays or sets the 2 position.</en></text>
+		<text name="input_WTP_POSITION_3"><de>WTP: Anfahren oder Setzen der 3 Position.</de><en>WTP: Plays or sets the 3 position.</en></text>
+		<text name="input_WTP_POSITION_4"><de>WTP: Anfahren oder Setzen der 4 Position.</de><en>WTP: Plays or sets the 4 position.</en></text>	
+		<text name="input_WTP_CHANGE_MODE"><de>WTP: Ändert ausgewählte Modus.</de><en>WTP: Changes mode.</en></text>
 	</l10n>
 	
 </modDesc>

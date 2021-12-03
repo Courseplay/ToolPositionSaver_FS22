@@ -5,28 +5,31 @@ WorkingToolPositions = {
 	MIN_ROT_SPEED = 0.1,
 	MAX_TRANS_SPEED = 1,
 	MIN_TRANS_SPEED = 0.4,
+	MODE_SET_PLAY = 0,
+	MODE_RESET = 1
 }
 WorkingToolPositions.MOD_NAME = g_currentModName
 WorkingToolPositions.DEBUG = false
 
-
 function WorkingToolPositions.initSpecialization()
 	local schema = Vehicle.xmlSchemaSavegame
 	local toolKey = "vehicles.vehicle(?).WorkingToolPositions.workingToolPositions.subVehicles(?)"
+	schema:register(XMLValueType.INT, toolKey .. "#id", "Vehicle id")
 	schema:register(XMLValueType.ANGLE, toolKey .. ".position(?).movingTool(?)#curRot", "Rotation saved.")
 	schema:register(XMLValueType.FLOAT, toolKey .. ".position(?).movingTool(?)#curTrans", "Translation saved.")
 end
 
 
 function WorkingToolPositions.prerequisitesPresent(specializations)
-    return SpecializationUtil.hasSpecialization(Shovel, specializations) or SpecializationUtil.hasSpecialization(DynamicMountAttacher, specializations)
+    return SpecializationUtil.hasSpecialization(Drivable, specializations) and SpecializationUtil.hasSpecialization(Cylindered, specializations)
 end
 
 function WorkingToolPositions.registerEventListeners(vehicleType)	
-	SpecializationUtil.registerEventListener(vehicleType, "onLoad", WorkingToolPositions)
+	SpecializationUtil.registerEventListener(vehicleType, "onPostLoad", WorkingToolPositions)
 	SpecializationUtil.registerEventListener(vehicleType, "onRegisterActionEvents", WorkingToolPositions)
 	SpecializationUtil.registerEventListener(vehicleType, "onUpdate", WorkingToolPositions)
 	SpecializationUtil.registerEventListener(vehicleType, "onPreDetach", WorkingToolPositions)
+	SpecializationUtil.registerEventListener(vehicleType, "onPostAttach", WorkingToolPositions)
 end
 
 function WorkingToolPositions.registerFunctions(vehicleType)
@@ -35,10 +38,14 @@ function WorkingToolPositions.registerFunctions(vehicleType)
 end
 
 function WorkingToolPositions:onPreDetach()
-	WorkingToolPositions.actionEventResetAllPositions(self)
+	WorkingToolPositions.updateActionEventState(self)
 end
 
-function WorkingToolPositions:onLoad(savegame)
+function WorkingToolPositions:onPostAttach()
+	WorkingToolPositions.updateActionEventState(self)
+end
+
+function WorkingToolPositions:onPostLoad(savegame)
 	--- Register the spec: spec_WorkingToolPositions
     local specName = WorkingToolPositions.MOD_NAME .. ".workingToolPositions"
     self.spec_workingToolPositions = self["spec_" .. specName]
@@ -49,19 +56,22 @@ function WorkingToolPositions:onLoad(savegame)
 	spec.hasPositions = {
 		false,false,false,false
 	}
-	spec.hasAtLeastOnePosition = false
 
-	spec.currentPositionSelected = 1
-
-	spec.currentPlayPositionIx = nil
+	spec.mode = WorkingToolPositions.MODE_SET_PLAY
 
 	spec.texts = {
 		setPosition = g_i18n:getText("WTP_SET_POSITION"),
 		playPosition = g_i18n:getText("WTP_PLAY_POSITION"),
 		resetPosition = g_i18n:getText("WTP_RESET_POSITION"),
-		changePosition = g_i18n:getText("WTP_CHANGE_POSITION"),
+		modeSetPlay = g_i18n:getText("WTP_MODE_SET_PLAY"),
+		modeReset = g_i18n:getText("WTP_MODE_RESET"),
+		modeSetPlayWarning = g_i18n:getText("WTP_MODE_CHANGED_TO_SET_PLAY"),
+		modeResetWarning = g_i18n:getText("WTP_MODE_CHANGED_TO_RESET"),
 	}
 	spec.isDirty = false
+
+	
+	--MessageCenter:subscribe(messageType, callback, callbackTarget, argument, isOneShot)
 
 	if self:getPropertyState() == Vehicle.PROPERTY_STATE_SHOP_CONFIG then
 		return
@@ -72,28 +82,28 @@ end
 function WorkingToolPositions:loadPositionsFromXml(savegame)
 	if savegame == nil or savegame.resetVehicles then return end
 	local spec = self.spec_workingToolPositions
-	savegame.xmlFile:iterate(string.format("%s.WorkingToolPositions.workingToolPositions.subVehicles", savegame.key), function (id, baseKey)
-		spec.positions[id-1] = {}
+	savegame.xmlFile:iterate(string.format("%s.WorkingToolPositions.workingToolPositions.subVehicles", savegame.key), function (j, baseKey)
+		local id = savegame.xmlFile:getValue(baseKey.."#id")
+		spec.positions[id] = {}
 		savegame.xmlFile:iterate(baseKey..".position", function (ix, key)
-			spec.positions[id-1][ix] = {}
+			spec.positions[id][ix] = {}
 			savegame.xmlFile:iterate(key..".movingTool", function (i, k)
-				spec.positions[id-1][ix][i] = {}
-				spec.positions[id-1][ix][i].curTrans =  savegame.xmlFile:getValue(k.."#curTrans")
-				spec.positions[id-1][ix][i].curRot =  savegame.xmlFile:getValue(k.."#curRot")
+				spec.positions[id][ix][i] = {}
+				spec.positions[id][ix][i].curTrans =  savegame.xmlFile:getValue(k.."#curTrans")
+				spec.positions[id][ix][i].curRot =  savegame.xmlFile:getValue(k.."#curRot")
 				spec.hasPositions[ix] = true
-				spec.hasAtLeastOnePosition = true
 			end)
 		end)
 	end)
 end
 
 function WorkingToolPositions:saveToXMLFile(xmlFile, key, usedModNames)
-	local rootVehicle = self:getRootVehicle()
-	if rootVehicle == nil then return end
 	local spec = self.spec_workingToolPositions
 	if spec.positions == nil then return end
+	local j = 0 
 	for id,positions in pairs(spec.positions) do
-		local baseKey = string.format("%s.subVehicles(%d)",key,id)
+		local baseKey = string.format("%s.subVehicles(%d)",key,j)
+		xmlFile:setValue(baseKey .. "#id", id)
 		for i, movingTools in ipairs(positions) do
 			local posKey = string.format("%s.position(%d)", baseKey, i-1)
 			for ix, tool in ipairs(movingTools) do
@@ -106,6 +116,7 @@ function WorkingToolPositions:saveToXMLFile(xmlFile, key, usedModNames)
 				end	
 			end
 		end
+		j = j + 1
 	end
 end
 
@@ -113,7 +124,6 @@ function WorkingToolPositions:onReadStream(streamId)
 	local spec = self.spec_workingToolPositions
 	for i=1,WorkingToolPositions.NUM_OF_POSITIONS do 
 		spec.hasPositions[i] = streamReadBool(streamId)
-		spec.hasAtLeastOnePosition = spec.hasPositions[i] or spec.hasAtLeastOnePosition
 	end
 end
 
@@ -139,16 +149,13 @@ function WorkingToolPositions:onRegisterActionEvents(isActiveForInput, isActiveF
 		end
 		if self:getIsActiveForInput(true, true) and entered and not self:getIsAIActive() then
 			if isActiveForInputIgnoreSelection then
-				_, actionEventId = self:addActionEvent(spec.actionEvents, InputAction.WTP_SET_OR_PLAY_POSITION, self, WorkingToolPositions.actionEventSetOrPlayPosition, false, true, false, true)
-				g_inputBinding:setActionEventTextPriority(actionEventId, GS_PRIO_NORMAL)
+				for i=1,WorkingToolPositions.NUM_OF_POSITIONS do 
+					_, actionEventId = self:addActionEvent(spec.actionEvents, InputAction[string.format("WTP_POSITION_%d",i)], self, WorkingToolPositions.actionEventChangePosition, false, true, false, true,i)
+					g_inputBinding:setActionEventTextPriority(actionEventId, GS_PRIO_NORMAL)
+				end
 				
-				_, actionEventId = self:addActionEvent(spec.actionEvents, InputAction.WTP_RESET_POSITION, self, WorkingToolPositions.actionEventResetPosition, false, true, false, true)
+				_, actionEventId = self:addActionEvent(spec.actionEvents, InputAction.WTP_CHANGE_MODE, self, WorkingToolPositions.actionEventChangeMode, false, true, false, true)
 				g_inputBinding:setActionEventTextPriority(actionEventId, GS_PRIO_NORMAL)
-				g_inputBinding:setActionEventText(actionEventId, spec.texts.resetPosition)
-
-				_, actionEventId = self:addActionEvent(spec.actionEvents, InputAction.WTP_CHANGE_POSITION, self, WorkingToolPositions.actionEventChangeCurrentPosition, false, true, false, true)
-				g_inputBinding:setActionEventTextPriority(actionEventId, GS_PRIO_NORMAL)
-				g_inputBinding:setActionEventText(actionEventId, spec.texts.changePosition)
 				WorkingToolPositions.updateActionEventState(self)
 			end
 		end
@@ -158,39 +165,71 @@ end
 
 function WorkingToolPositions:updateActionEventState()
 	local spec = self.spec_workingToolPositions
-    local actionEvent = spec.actionEvents[InputAction.WTP_SET_OR_PLAY_POSITION]
-	local text = spec.hasPositions[spec.currentPositionSelected] and spec.texts.playPosition or spec.texts.setPosition
-	g_inputBinding:setActionEventText(actionEvent.actionEventId, string.format(text,spec.currentPositionSelected))
+    
+	local hasMoveableTools = false 
+	for _,tool in ipairs(self.spec_cylindered.movingTools) do
+		if tool.axisActionIndex then 
+			hasMoveableTools = true 
+			break
+		end
+	end
 
-	actionEvent = spec.actionEvents[InputAction.WTP_RESET_POSITION]
-	g_inputBinding:setActionEventActive(actionEvent.actionEventId, spec.hasPositions[spec.currentPositionSelected])
-	g_inputBinding:setActionEventText(actionEvent.actionEventId, string.format(spec.texts.resetPosition,spec.currentPositionSelected))
+	if hasMoveableTools == false then
+		local childVehicles = self:getChildVehicles()
+		for _, childVehicle in ipairs(childVehicles) do
+			for _,tool in ipairs(childVehicle.spec_cylindered.movingTools) do
+				if tool.axisActionIndex then 
+					hasMoveableTools = true 
+					break
+				end
+			end
+			if hasMoveableTools then 
+				break
+			end
+		end
+	end
 
-	actionEvent = spec.actionEvents[InputAction.WTP_CHANGE_POSITION]
-	g_inputBinding:setActionEventText(actionEvent.actionEventId, string.format(spec.texts.changePosition,spec.currentPositionSelected))
+	for i=1,WorkingToolPositions.NUM_OF_POSITIONS do 
+		local actionEvent = spec.actionEvents[InputAction[string.format("WTP_POSITION_%d",i)]]
+		local text,isActive = "",true
+		if spec.mode == WorkingToolPositions.MODE_SET_PLAY then 
+			text = spec.hasPositions[i] and spec.texts.playPosition or spec.texts.setPosition
+		else
+			text = spec.texts.resetPosition
+			isActive = spec.hasPositions[i]
+		end
+		g_inputBinding:setActionEventText(actionEvent.actionEventId, string.format(text,i))
+		g_inputBinding:setActionEventActive(actionEvent.actionEventId,isActive and hasMoveableTools)
+	end
+	local actionEvent = spec.actionEvents[InputAction.WTP_CHANGE_MODE]
+	local text = spec.mode == WorkingToolPositions.MODE_SET_PLAY and spec.texts.modeSetPlay or spec.texts.modeReset
+	g_inputBinding:setActionEventText(actionEvent.actionEventId, text)
+	g_inputBinding:setActionEventActive(actionEvent.actionEventId,hasMoveableTools)
 end
 
-function WorkingToolPositions.actionEventSetOrPlayPosition(self, actionName, inputValue, callbackState, isAnalog)
+function WorkingToolPositions.actionEventChangePosition(self, actionName, inputValue, callbackState, isAnalog)
 	local spec = self.spec_workingToolPositions
-	if spec.hasPositions[spec.currentPositionSelected] then 
-		WorkingToolPositions.playPosition(self,spec.currentPositionSelected)
-		WorkingToolsPositionEvent.sendPlayEvent(self)
+	if spec.mode ==  WorkingToolPositions.MODE_SET_PLAY then
+	
+		if spec.hasPositions[callbackState] then 
+			WorkingToolPositions.playPosition(self,callbackState)
+			WorkingToolsPositionEvent.sendPlayEvent(self)
+		else 
+			WorkingToolPositions.setPosition(self,callbackState)
+			WorkingToolsPositionEvent.sendSetEvent(self)
+		end
 	else 
-		WorkingToolPositions.setPosition(self,spec.currentPositionSelected)
-		WorkingToolsPositionEvent.sendSetEvent(self)
+		WorkingToolPositions.resetPosition(self,callbackState)
+		WorkingToolsPositionEvent.sendResetEvent(self)
 	end
 end
 
-function WorkingToolPositions.actionEventResetPosition(self, actionName, inputValue, callbackState, isAnalog)
+function WorkingToolPositions.actionEventChangeMode(self, actionName, inputValue, callbackState, isAnalog)
 	local spec = self.spec_workingToolPositions
-	WorkingToolPositions.resetPosition(self,spec.currentPositionSelected)
-	WorkingToolsPositionEvent.sendResetEvent(self)
-end
-
-function WorkingToolPositions.actionEventChangeCurrentPosition(self, actionName, inputValue, callbackState, isAnalog)
-	local spec = self.spec_workingToolPositions
-	WorkingToolPositions.changePosition(self)
-	WorkingToolsPositionEvent.sendChangeEvent(self)
+	spec.mode = spec.mode == WorkingToolPositions.MODE_SET_PLAY and WorkingToolPositions.MODE_RESET or WorkingToolPositions.MODE_SET_PLAY
+	local text = spec.mode == WorkingToolPositions.MODE_SET_PLAY and spec.texts.modeSetPlayWarning or spec.texts.modeResetWarning
+	g_currentMission.hud:showBlinkingWarning(text,500)
+	WorkingToolPositions.updateActionEventState(self)
 end
 
 
@@ -198,7 +237,6 @@ function WorkingToolPositions:setPosition(positionIx)
 	WorkingToolPositions.debugVehicle(self,"Set position %d.",positionIx)
 	local spec = self.spec_workingToolPositions
 	spec.hasPositions[positionIx] = true
-	spec.hasAtLeastOnePosition = true
 	if g_server == nil then return end
 
 	local cylinderedSpec = self.spec_cylindered
@@ -208,21 +246,28 @@ function WorkingToolPositions:setPosition(positionIx)
 	end
 	spec.positions[id][positionIx] = {}
 	for toolIndex, tool in ipairs(cylinderedSpec.movingTools) do
-		spec.positions[id][positionIx][toolIndex] = {}
-		spec.positions[id][positionIx][toolIndex].curRot = tool.curRot[tool.rotationAxis]
-		spec.positions[id][positionIx][toolIndex].curTrans = tool.curTrans[tool.translationAxis]
+	--	if tool.axisActionIndex ~= nil then
+			spec.positions[id][positionIx][toolIndex] = {}
+			spec.positions[id][positionIx][toolIndex].curRot = tool.curRot[tool.rotationAxis]
+			spec.positions[id][positionIx][toolIndex].curTrans = tool.curTrans[tool.translationAxis]
+	--	end
 	end
-	local rootVehicle = self:getRootVehicle()
-	cylinderedSpec = rootVehicle.spec_cylindered
-	id = rootVehicle.id
-	if spec.positions[id] == nil then 
-		spec.positions[id] = {}
-	end
-	spec.positions[id][positionIx] = {}
-	for toolIndex, tool in ipairs(cylinderedSpec.movingTools) do
-		spec.positions[id][positionIx][toolIndex] = {}
-		spec.positions[id][positionIx][toolIndex].curRot = tool.curRot[tool.rotationAxis]
-		spec.positions[id][positionIx][toolIndex].curTrans = tool.curTrans[tool.translationAxis]
+	local childVehicles = self:getChildVehicles()
+
+	for _, childVehicle in ipairs(childVehicles) do
+		cylinderedSpec = childVehicle.spec_cylindered
+		id = childVehicle.id
+		if spec.positions[id] == nil then 
+			spec.positions[id] = {}
+		end
+		spec.positions[id][positionIx] = {}
+		for toolIndex, tool in ipairs(cylinderedSpec.movingTools) do
+		--	if tool.axisActionIndex ~= nil then
+				spec.positions[id][positionIx][toolIndex] = {}
+				spec.positions[id][positionIx][toolIndex].curRot = tool.curRot[tool.rotationAxis]
+				spec.positions[id][positionIx][toolIndex].curTrans = tool.curTrans[tool.translationAxis]
+	--		end
+		end
 	end
 	WorkingToolPositions.updateActionEventState(self)
 end
@@ -232,7 +277,11 @@ function WorkingToolPositions:resetPosition(positionIx)
 	local spec = self.spec_workingToolPositions
 	if spec.hasPositions[positionIx] then 
 		spec.hasPositions[positionIx] = false
-		spec.positions[positionIx] = nil
+		spec.positions[self.id][positionIx] = nil
+		local childVehicles = self:getChildVehicles()
+		for _, childVehicle in ipairs(childVehicles) do
+			spec.positions[childVehicle.id][positionIx] = nil
+		end
 	end
 	WorkingToolPositions.updateActionEventState(self)
 end
@@ -271,7 +320,11 @@ function WorkingToolPositions:onUpdate(dt)
 	end
 
 	local isDirty =	WorkingToolPositions.updateToolPositions(self,spec,dt)
-	isDirty = WorkingToolPositions.updateToolPositions( self:getRootVehicle(),spec,dt) or isDirty
+	local childVehicles = self:getChildVehicles()
+
+	for _, childVehicle in ipairs(childVehicles) do
+		isDirty = WorkingToolPositions.updateToolPositions( childVehicle,spec,dt) or isDirty
+	end
 	spec.isDirty = isDirty
 	if not isDirty then 
 		WorkingToolPositions.debugVehicle(self,"Reset playing position %d",spec.currentPlayPositionIx)
