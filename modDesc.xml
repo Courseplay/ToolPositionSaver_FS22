@@ -11,7 +11,7 @@
         <de>Working tool positions</de>
     </description>
 
-	<iconFilename>icon_courseplay.dds</iconFilename>
+	<iconFilename>Icon_ToolPositionSaver.dds</iconFilename>
     <multiplayer supported="true" />
 	
 	<extraSourceFiles>
