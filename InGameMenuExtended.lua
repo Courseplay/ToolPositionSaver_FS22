@@ -1,24 +1,24 @@
-InGameMenuGameExtendedWtp = {}
+InGameMenuGameExtendedtps = {}
 
-function InGameMenuGameExtendedWtp.onFrameOpen(self)
-	if self.wtpSubTitleElement == nil or self.wtpSetting ==nil then
-		local subTitleElement = InGameMenuGameExtendedWtp.getSubTitleElement(self)
-		self.wtpSubTitleElement = subTitleElement:clone(subTitleElement.parent)
-		self.wtpSubTitleElement:setText("WTP")
-		self.wtpSetting = self.economicDifficulty:clone(self.economicDifficulty.parent)
-		local toolTipElement = InGameMenuGameExtendedWtp.getElementToolTip(self,self.wtpSetting)
-		toolTipElement:setText("wtp toolTip")
+function InGameMenuGameExtendedTps.onFrameOpen(self)
+	if self.tpsSubTitleElement == nil or self.tpsSetting ==nil then
+		local subTitleElement = InGameMenuGameExtendedTps.getSubTitleElement(self)
+		self.tpsSubTitleElement = subTitleElement:clone(subTitleElement.parent)
+		self.tpsSubTitleElement:setText("TPS")
+		self.tpsSetting = self.economicDifficulty:clone(self.economicDifficulty.parent)
+		local toolTipElement = InGameMenuGameExtendedTps.getElementToolTip(self,self.tpsSetting)
+		toolTipElement:setText("tps toolTip")
 	end
-	self.wtpSetting:setVisible(true)
-	self.wtpSetting:setTexts({"1","2","3","4"})
-	self.wtpSetting:setLabel("wtp")
+	self.tpsSetting:setVisible(true)
+	self.tpsSetting:setTexts({"1","2","3","4"})
+	self.tpsSetting:setLabel("tps")
 	print("Added Setting")
 	self:updateAvailableProperties()
 end
-InGameMenuGameSettingsFrame.onFrameOpen = Utils.appendedFunction(InGameMenuGameSettingsFrame.onFrameOpen,InGameMenuGameExtendedWtp.onFrameOpen)
+InGameMenuGameSettingsFrame.onFrameOpen = Utils.appendedFunction(InGameMenuGameSettingsFrame.onFrameOpen,InGameMenuGameExtendedTps.onFrameOpen)
 
 
-function InGameMenuGameExtendedWtp.getSubTitleElement(self)
+function InGameMenuGameExtendedTps.getSubTitleElement(self)
 	for i,element in ipairs(self.boxLayout.elements) do 
 		if element.profile == "settingsMenuSubtitle" then 
 			return element
@@ -26,7 +26,7 @@ function InGameMenuGameExtendedWtp.getSubTitleElement(self)
 	end
 end
 
-function InGameMenuGameExtendedWtp.getElementToolTip(self,element)
+function InGameMenuGameExtendedTps.getElementToolTip(self,element)
 	for i,element in ipairs(element.elements) do 
 		if element.profile == "multiTextOptionSettingsTooltip" then 
 			return element

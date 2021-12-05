@@ -3,12 +3,12 @@
     <version>1.0.0.0</version>
 	<author><![CDATA[Courseplay.devTeam]]></author>
 	<title>
-		<en>Working tool positions</en>
+		<en>Tool Position Saver</en>
 	</title>
 
     <description>
-        <en>Working tool positions</en>
-        <de>Working tool positions</de>
+        <en>Tool Position Saver</en>
+        <de>Tool Position Saver</de>
     </description>
 
 	<iconFilename>Icon_ToolPositionSaver.dds</iconFilename>
@@ -19,50 +19,50 @@
 	</extraSourceFiles>
 
 	<specializations>
-        <specialization name="workingToolPositions"                   className="WorkingToolPositions"                   filename="WorkingToolPositions.lua" />
+        <specialization name="toolPositionSaver"                   className="ToolPositionSaver"                   filename="ToolPositionSaver.lua" />
     </specializations>
 
 		<inputBinding>
-		<actionBinding action="WTP_POSITION_1">
+		<actionBinding action="TPS_POSITION_1">
 			<binding device="KB_MOUSE_DEFAULT" input="KEY_lctrl KEY_1" />
 		</actionBinding>
-		<actionBinding action="WTP_POSITION_2">
+		<actionBinding action="TPS_POSITION_2">
 			<binding device="KB_MOUSE_DEFAULT" input="KEY_lctrl KEY_2" />
 		</actionBinding>
-		<actionBinding action="WTP_POSITION_3">
+		<actionBinding action="TPS_POSITION_3">
 			<binding device="KB_MOUSE_DEFAULT" input="KEY_lctrl KEY_3" />
 		</actionBinding>
-		<actionBinding action="WTP_POSITION_4">
+		<actionBinding action="TPS_POSITION_4">
 			<binding device="KB_MOUSE_DEFAULT" input="KEY_lctrl KEY_4" />
 		</actionBinding>
-		<actionBinding action="WTP_CHANGE_MODE">
+		<actionBinding action="TPS_CHANGE_MODE">
 			<binding device="KB_MOUSE_DEFAULT" input="KEY_lctrl KEY_5" />
 		</actionBinding>
     </inputBinding>	
 
 	<actions>
-		<action name="WTP_POSITION_1" />
-		<action name="WTP_POSITION_2" />
-		<action name="WTP_POSITION_3" />
-		<action name="WTP_POSITION_4" />
-		<action name="WTP_CHANGE_MODE" />
+		<action name="TPS_POSITION_1" />
+		<action name="TPS_POSITION_2" />
+		<action name="TPS_POSITION_3" />
+		<action name="TPS_POSITION_4" />
+		<action name="TPS_CHANGE_MODE" />
 	</actions>
 
 	<l10n>	
-		<text name="WTP_SET_POSITION"><de>WTP: Setze Position %d</de><en>WTP: Sets position %d</en></text>	
-		<text name="WTP_PLAY_POSITION"><de>WTP: Fahre Position %d an.</de><en>WTP: Plays to position %d.</en></text>	
-		<text name="WTP_RESET_POSITION"><de>WTP: Positionen %d zurücksetzen.</de><en>WTP: Resets positions %d.</en></text>
-		<text name="WTP_MODE_SET_PLAY"><de>WTP: Ändert Modus(Setzen/anfahren).</de><en>WTP: Changes mode.</en></text>
-		<text name="WTP_MODE_RESET"><de>WTP: Ändert Modus(Zurücksetzen).</de><en>WTP: Changes mode.</en></text>
+		<text name="TPS_SET_POSITION"><de>TPS: Setze Position %d</de><en>TPS: Set position %d</en></text>	
+		<text name="TPS_PLAY_POSITION"><de>TPS: Fahre Position %d an.</de><en>TPS: Play position %d.</en></text>	
+		<text name="TPS_RESET_POSITION"><de>TPS: Positionen %d zurücksetzen.</de><en>TPS: Reset positions %d.</en></text>
+		<text name="TPS_MODE_SET_PLAY"><de>TPS: Ändert Modus(Setzen/anfahren).</de><en>TPS: Change mode.</en></text>
+		<text name="TPS_MODE_RESET"><de>TPS: Ändert Modus(Zurücksetzen).</de><en>TPS: Change mode.</en></text>
 		
-		<text name="WTP_MODE_CHANGED_TO_SET_PLAY"><de>WTP: Modus auf Setzen/anfahren geändert.</de><en>WTP: Changes mode.</en></text>
-		<text name="WTP_MODE_CHANGED_TO_RESET"><de>WTP: Modus auf reset geändert.</de><en>WTP: Changes mode.</en></text>
+		<text name="TPS_MODE_CHANGED_TO_SET_PLAY"><de>TPS: Modus auf Setzen/anfahren geändert.</de><en>TPS: Change mode.</en></text>
+		<text name="TPS_MODE_CHANGED_TO_RESET"><de>TPS: Modus auf reset geändert.</de><en>TPS: Change mode.</en></text>
 
-		<text name="input_WTP_POSITION_1"><de>WTP: Anfahren oder Setzen der 1 Position.</de><en>WTP: Plays or sets the 1 position.</en></text>
-		<text name="input_WTP_POSITION_2"><de>WTP: Anfahren oder Setzen der 2 Position.</de><en>WTP: Plays or sets the 2 position.</en></text>
-		<text name="input_WTP_POSITION_3"><de>WTP: Anfahren oder Setzen der 3 Position.</de><en>WTP: Plays or sets the 3 position.</en></text>
-		<text name="input_WTP_POSITION_4"><de>WTP: Anfahren oder Setzen der 4 Position.</de><en>WTP: Plays or sets the 4 position.</en></text>	
-		<text name="input_WTP_CHANGE_MODE"><de>WTP: Ändert ausgewählte Modus.</de><en>WTP: Changes mode.</en></text>
+		<text name="input_TPS_POSITION_1"><de>TPS: Anfahren oder Setzen der 1 Position.</de><en>TPS: Play or set the 1 position.</en></text>
+		<text name="input_TPS_POSITION_2"><de>TPS: Anfahren oder Setzen der 2 Position.</de><en>TPS: Play or set the 2 position.</en></text>
+		<text name="input_TPS_POSITION_3"><de>TPS: Anfahren oder Setzen der 3 Position.</de><en>TPS: Play or set the 3 position.</en></text>
+		<text name="input_TPS_POSITION_4"><de>TPS: Anfahren oder Setzen der 4 Position.</de><en>TPS: Play or set the 4 position.</en></text>	
+		<text name="input_TPS_CHANGE_MODE"><de>TPS: Ändert ausgewählte Modus.</de><en>TPS: Changes mode.</en></text>
 	</l10n>
 	
 </modDesc>
