@@ -179,6 +179,10 @@ function ToolPositionSaver:updateActionEventState()
 		return
 	end
     
+	if spec.actionEvents == nil or next(spec.actionEvents) == nil then
+		return
+	end
+
 	local hasMoveableTools = false 
 	for _,tool in ipairs(self.spec_cylindered.movingTools) do
 		if tool.axisActionIndex then 
@@ -459,8 +463,8 @@ end
 --- Writes the serialized data from the sender.
 function ToolPositionSaverEvent:writeStream(streamId, connection)  -- Wird aufgrufen wenn ich ein event verschicke (merke: reihenfolge der Daten muss mit der bei readStream uebereinstimmen 
 	NetworkUtil.writeNodeObject(streamId,self.vehicle)
-	streamWriteUIntN(self.mode,2)
-	streamWriteUIntN(self.positionIx,3)
+	streamWriteUIntN(streamId,self.mode,2)
+	streamWriteUIntN(streamId,self.positionIx,3)
 end
 
 --- Runs the event on the receiving end of the event.
