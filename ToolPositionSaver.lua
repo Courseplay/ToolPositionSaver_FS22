@@ -31,6 +31,8 @@ function ToolPositionSaver.registerEvents(vehicleType)
 end
 
 function ToolPositionSaver.registerEventListeners(vehicleType)	
+	SpecializationUtil.registerEventListener(vehicleType, "onReadStream", ToolPositionSaver)
+	SpecializationUtil.registerEventListener(vehicleType, "onWriteStream", ToolPositionSaver)
 	SpecializationUtil.registerEventListener(vehicleType, "onLoad", ToolPositionSaver)
 	SpecializationUtil.registerEventListener(vehicleType, "onRegisterActionEvents", ToolPositionSaver)
 	SpecializationUtil.registerEventListener(vehicleType, "onUpdate", ToolPositionSaver)
