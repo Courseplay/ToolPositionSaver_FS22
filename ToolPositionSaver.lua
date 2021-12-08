@@ -134,6 +134,7 @@ function ToolPositionSaver:onReadStream(streamId)
 	for i=1,ToolPositionSaver.NUM_OF_POSITIONS do 
 		spec.hasPositions[i] = streamReadBool(streamId)
 	end
+	ToolPositionSaver.updateActionEventState(self)
 end
 
 function ToolPositionSaver:onWriteStream(streamId)
