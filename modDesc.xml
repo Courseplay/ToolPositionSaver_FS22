@@ -7,8 +7,66 @@
 	</title>
 
     <description>
-        <en>Tool Position Saver</en>
-        <de>Tool Position Saver</de>
+        <en>
+		<![CDATA[Tool Position Saver - Save up to 4 Positions!
+
+With this mod you can save up to 4 positions for Vehicle that got a mouse control.
+Sei es ein Radlader mit einer Schaufel, das Förderband eines Rübenernters für verschiedene Trailer oder der Gabelstapler für verschiedene Paletten und höhen.
+
+With Set Position X, you can save the current Position to the corresponding Slot.
+With Play Position, the corresponding Slot will be played.
+
+With Switch mode you can delete single positions and after switching back, save a new position.
+
+Default Keybinds:
+
+Set/Play/Delete Position 1:
+Left Control + 1
+
+Set/Play/Delete Position 2:
+Left Control + 2
+
+Set/Play/Delete Position 3:
+Left Control + 3
+
+Set/Play/Delete Position 4:
+Left Control + 4
+
+Switch mode:
+Left Control + 5
+
+]]>
+		</en>
+        <de>
+		<![CDATA[Tool Position Saver - Speicher bis zu 4 Positionen!
+
+Mit dieser Mod könnt ihr bis zu 4 Positionen für Fahrzeuge mit einer Maussteuerung speichern.
+Sei es ein Radlader mit einer Schaufel, das Förderband eines Rübenernters für verschiedene Trailer oder der Gabelstapler für verschiedene Paletten und höhen.
+
+Mit Setze Position X, speichert ihr die aktuell angefahrene Position auf den jeweiligen Slot.
+Mit Fahre Position X an, wird die jeweilige Position angefahren.
+
+Durch das Umschalten (Ändert Modus) lassen sich einzelne Positionen löschen und nach dem Zurückschalten neu belegen.
+
+Standarttastenbelegung:
+
+Setze/Fahre/Lösche Position 1:
+Steuerung Links + 1
+
+Setze/Fahre/Lösche Position 2:
+Steuerung Links + 2
+
+Setze/Fahre/Lösche Position 3:
+Steuerung Links + 3
+
+Setze/Fahre/Lösche Position 4:
+Steuerung Links + 4
+
+Modus Umschalten:
+Steuerung Links + 5
+
+]]>
+		</de>
     </description>
 
 	<iconFilename>Icon_ToolPositionSaver.dds</iconFilename>
