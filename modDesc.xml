@@ -10,26 +10,26 @@
         <en>
 		<![CDATA[Tool Position Saver - Save up to 4 Positions!
 
-With this mod you can save up to 4 positions for Vehicle that got a mouse control.
-Sei es ein Radlader mit einer Schaufel, das Förderband eines Rübenernters für verschiedene Trailer oder der Gabelstapler für verschiedene Paletten und höhen.
+This mod allows you to save up to 4 positions, if at least one vehicle or implement has active mouse controls.
+For example a wheel loader with a shovel, a conveyor belt of a beet harvester or a forklift and so on.
 
-With Set Position X, you can save the current Position to the corresponding Slot.
-With Play Position, the corresponding Slot will be played.
+With set position X, you can save the current position to the corresponding slot.
+With play position, the corresponding slot will be played.
 
-With Switch mode you can delete single positions and after switching back, save a new position.
+With switch mode you change the input mode to setting, playing positions or to deleting positions. 
 
-Default Keybinds:
+Default keybinds are:
 
-Set/Play/Delete Position 1:
+Set/Play/Delete position 1:
 Left Control + 1
 
-Set/Play/Delete Position 2:
+Set/Play/Delete position 2:
 Left Control + 2
 
-Set/Play/Delete Position 3:
+Set/Play/Delete position 3:
 Left Control + 3
 
-Set/Play/Delete Position 4:
+Set/Play/Delete position 4:
 Left Control + 4
 
 Switch mode:
