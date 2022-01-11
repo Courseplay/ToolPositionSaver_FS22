@@ -71,10 +71,6 @@ Steuerung Links + 5
 
 	<iconFilename>Icon_ToolPositionSaver.dds</iconFilename>
     <multiplayer supported="true" />
-	
-	<extraSourceFiles>
-	<!--	<sourceFile filename="InGameMenuExtended.lua"/> -->
-	</extraSourceFiles>
 
 	<specializations>
         <specialization name="toolPositionSaver"                   className="ToolPositionSaver"                   filename="ToolPositionSaver.lua" />
