@@ -200,15 +200,16 @@ function ToolPositionSaver:onRegisterActionEvents(isActiveForInput, isActiveForI
 		end
 		if self:getIsActiveForInput(true, true) and entered and not self:getIsAIActive() then
 			if isActiveForInputIgnoreSelection then
+				
+				_, actionEventId = self:addActionEvent(spec.actionEvents, InputAction.TPS_SHOW_KEYBINDING, self, ToolPositionSaver.actionEventChangeKeybindingVisibility, false, true, false, true)
+				g_inputBinding:setActionEventTextPriority(actionEventId, GS_PRIO_NORMAL)
+				
 				for i=1,ToolPositionSaver.NUM_OF_POSITIONS do 
 					_, actionEventId = self:addActionEvent(spec.actionEvents, InputAction[string.format("TPS_POSITION_%d",i)], self, ToolPositionSaver.actionEventChangePosition, false, true, false, true,i)
 					g_inputBinding:setActionEventTextPriority(actionEventId, GS_PRIO_NORMAL)
 				end
 				
 				_, actionEventId = self:addActionEvent(spec.actionEvents, InputAction.TPS_CHANGE_MODE, self, ToolPositionSaver.actionEventChangeMode, false, true, false, true)
-				g_inputBinding:setActionEventTextPriority(actionEventId, GS_PRIO_NORMAL)
-
-				_, actionEventId = self:addActionEvent(spec.actionEvents, InputAction.TPS_SHOW_KEYBINDING, self, ToolPositionSaver.actionEventChangeKeybindingVisibility, false, true, false, true)
 				g_inputBinding:setActionEventTextPriority(actionEventId, GS_PRIO_NORMAL)
 				
 				ToolPositionSaver.updateActionEventState(self)
