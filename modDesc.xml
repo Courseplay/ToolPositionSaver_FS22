@@ -34,10 +34,10 @@ Left Control + 3
 Set/Play/Delete position 4:
 Left Control + 4
 
-Switch mode:
+Changes mode between save/play and delte for the postitions:
 Left Control + 5
 
-Toggle keybinds on/off:
+Toggle show keybinds:
 Left Control + 6
 
 Changelog 1.0.1.0:
@@ -76,10 +76,10 @@ Steuerung Links + 3
 Setze/Fahre/Lösche Position 4:
 Steuerung Links + 4
 
-Modus Umschalten:
+Ändert den Modus zwischen speichern/anfahren und löschen der Positionen:
 Steuerung Links + 5
 
-Tastenbelegung an/aus:
+Tastenbelegung ein-/ausblenden:
 Steuerung Links + 6
 
 Changelog 1.0.1.0:
