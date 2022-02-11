@@ -21,7 +21,7 @@ function ToolPositionSaver.initSpecialization()
 end
 
 function ToolPositionSaver.prerequisitesPresent(specializations)
-    return SpecializationUtil.hasSpecialization(Cylindered, specializations)
+    return SpecializationUtil.hasSpecialization(Cylindered, specializations) and not SpecializationUtil.hasSpecialization(BigBag, specializations)
 end
 
 function ToolPositionSaver.registerEvents(vehicleType)
@@ -56,7 +56,6 @@ function ToolPositionSaver:onPostAttach()
 end
 
 function ToolPositionSaver:onLoad(savegame)
-	--- Register the spec: spec_ToolPositionSaver
     local specName = ToolPositionSaver.MOD_NAME .. ".toolPositionSaver"
     self.spec_toolPositionSaver = self["spec_" .. specName]
     local spec = self.spec_toolPositionSaver
@@ -259,7 +258,9 @@ function ToolPositionSaver:setPosition(positionIx)
 	if g_server == nil then return end
 	local childVehicles = self:getChildVehicles()
 	for _, childVehicle in ipairs(childVehicles) do
-		SpecializationUtil.raiseEvent(childVehicle, "onTpsSetPositions", positionIx)
+		if childVehicle.spec_toolPositionSaver then
+			SpecializationUtil.raiseEvent(childVehicle, "onTpsSetPositions", positionIx)
+		end
 	end
 end
 
@@ -283,7 +284,9 @@ function ToolPositionSaver:resetPosition(positionIx)
 	ToolPositionSaver.updateActionEventState(self)
 	local childVehicles = self:getChildVehicles()
 	for _, childVehicle in ipairs(childVehicles) do
-		SpecializationUtil.raiseEvent(childVehicle, "onTpsResetPositions", positionIx)
+		if childVehicle.spec_toolPositionSaver then
+			SpecializationUtil.raiseEvent(childVehicle, "onTpsResetPositions", positionIx)
+		end
 	end
 end
 
@@ -299,7 +302,9 @@ function ToolPositionSaver:playPosition(positionIx)
 	ToolPositionSaver.updateActionEventState(self)
 	local childVehicles = self:getChildVehicles()
 	for _, childVehicle in ipairs(childVehicles) do
-		SpecializationUtil.raiseEvent(childVehicle, "onTpsPlayPositions", positionIx)
+		if childVehicle.spec_toolPositionSaver then
+			SpecializationUtil.raiseEvent(childVehicle, "onTpsPlayPositions", positionIx)
+		end
 	end
 end
 
