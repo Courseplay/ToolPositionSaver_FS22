@@ -74,12 +74,6 @@ function ToolPositionSaver:onLoad(savegame)
 
 	ToolPositionSaver.loadPositionsFromXml(self,savegame)
 
-
-	if not SpecializationUtil.hasSpecialization(Drivable, self.specializations) then 
-		SpecializationUtil.removeEventListener(self, "onRegisterActionEvents", ToolPositionSaver)
-		return 
-	end
-
 	spec.master = true
 
 	spec.mode = ToolPositionSaver.MODE_SET_PLAY
@@ -151,6 +145,10 @@ end
 ---@param isActiveForInputIgnoreSelection boolean
 function ToolPositionSaver:onRegisterActionEvents(isActiveForInput, isActiveForInputIgnoreSelection)
 	if self.isClient then
+		if not self.spec_drivable then 
+			return
+		end
+
 		local spec = self.spec_toolPositionSaver
 		self:clearActionEventsTable(spec.actionEvents)
 		
