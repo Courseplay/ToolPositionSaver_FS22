@@ -16,7 +16,9 @@ For example a wheel loader with a shovel, a conveyor belt of a beet harvester or
 With set position X, you can save the current position to the corresponding slot.
 With play position, the corresponding slot will be played.
 
-With switch mode you change the input mode to setting, playing positions or to deleting positions. 
+With switch mode you change the input mode to setting, playing positions or to deleting positions.
+
+For bugs and feedback, please visit https://github.com/Courseplay/ToolPositionSaver_FS22/ .
 
 Default keybinds are:
 
@@ -57,6 +59,8 @@ Mit Setze Position X, speichert ihr die aktuell angefahrene Position auf den jew
 Mit Fahre Position X an, wird die jeweilige Position angefahren.
 
 Durch das Umschalten (Ändert Modus) lassen sich einzelne Positionen löschen und nach dem Zurückschalten neu belegen.
+
+Bei Problemen und Anregungen, schaut bitte unter https://github.com/Courseplay/ToolPositionSaver_FS22/ vorbei.
 
 Standarttastenbelegung:
 
