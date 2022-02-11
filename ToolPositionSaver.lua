@@ -194,14 +194,16 @@ function ToolPositionSaver:updateActionEventState()
 	if hasMoveableTools == false then
 		local childVehicles = self:getChildVehicles()
 		for _, childVehicle in ipairs(childVehicles) do
-			for _,tool in ipairs(childVehicle.spec_cylindered.movingTools) do
-				if tool.axisActionIndex then 
-					hasMoveableTools = true 
+			if childVehicle.spec_cylindered then
+				for _,tool in ipairs(childVehicle.spec_cylindered.movingTools) do
+					if tool.axisActionIndex then 
+						hasMoveableTools = true 
+						break
+					end
+				end
+				if hasMoveableTools then 
 					break
 				end
-			end
-			if hasMoveableTools then 
-				break
 			end
 		end
 	end
