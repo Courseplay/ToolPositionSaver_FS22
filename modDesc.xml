@@ -35,6 +35,16 @@ Left Control + 4
 Switch mode:
 Left Control + 5
 
+Toggle keybinds on/off:
+Left Control + 6
+
+Changelog 1.0.1.0:
+- Works now with Forkelifts
+- Fixed mod compatibility Issue with FS22_cultivatorFieldCreator
+- Fixed mod compatibility Issue with FS22_aPalletAutoLoader
+- Fixed Issue with Bigbag Handler
+- Added keybind to show/hide the keybinds
+
 ]]>
 		</en>
         <de>
@@ -64,6 +74,16 @@ Steuerung Links + 4
 
 Modus Umschalten:
 Steuerung Links + 5
+
+Tastenbelegung an/aus:
+Steuerung Links + 6
+
+Changelog 1.0.1.0:
+- Funktioniert jetzt auch mit Gabelstaplern
+- Kompatibilität mit FS22_cultivatorFieldCreator gefixt
+- Kompatibilität mit FS22_aPalletAutoLoader gefixt
+- Problem mit Bigbag Frontladertool gefixt
+- Tastenbelegung zum ein- und ausblenden der Tastenbelegung hinzugefügt
 
 ]]>
 		</de>
