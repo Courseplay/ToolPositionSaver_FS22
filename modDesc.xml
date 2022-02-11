@@ -136,9 +136,9 @@ Changelog 1.0.1.0:
 		<text name="TPS_MODE_CHANGED_TO_SET_PLAY"><de>TPS: Modus auf Setzen/anfahren geändert.</de><en>TPS: Change mode.</en></text>
 		<text name="TPS_MODE_CHANGED_TO_RESET"><de>TPS: Modus auf reset geändert.</de><en>TPS: Change mode.</en></text>
 
-		<text name="TPS_KEYBINDINGS_VISIBLE"><de>TPS: Tastenbelegung %s</de><en>TPS: Keybindings %s</en></text>
-		<text name="TPS_KEYBINDINGS_ACTIVATED"><de>ausblenden</de><en>active</en></text>
-		<text name="TPS_KEYBINDINGS_DEACTIVATED"><de>anzeigen</de><en>disabled</en></text>
+		<text name="TPS_KEYBINDINGS_VISIBLE"><de>TPS: Tastenbelegung %s</de><en>TPS: %s keybindings</en></text>
+		<text name="TPS_KEYBINDINGS_ACTIVATED"><de>ausblenden</de><en>Show</en></text>
+		<text name="TPS_KEYBINDINGS_DEACTIVATED"><de>anzeigen</de><en>Hide</en></text>
 
 		<text name="input_TPS_POSITION_1"><de>TPS: Anfahren oder Setzen der 1 Position.</de><en>TPS: Play or set the 1 position.</en></text>
 		<text name="input_TPS_POSITION_2"><de>TPS: Anfahren oder Setzen der 2 Position.</de><en>TPS: Play or set the 2 position.</en></text>
