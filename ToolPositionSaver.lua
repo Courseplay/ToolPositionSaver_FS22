@@ -11,6 +11,40 @@ ToolPositionSaver = {
 ToolPositionSaver.MOD_NAME = g_currentModName
 ToolPositionSaver.DEBUG = true
 ToolPositionSaver.KEY = "."..ToolPositionSaver.MOD_NAME..".toolPositionSaver."
+ToolPositionSaver.showKeyBindings = false
+--- Global xml file.
+ToolPositionSaver.baseXmlKey = "ToolPositionSaver"
+ToolPositionSaver.xmlKeyBindings = ToolPositionSaver.baseXmlKey .."#showKeyBindings"
+
+function ToolPositionSaver.init()
+	ToolPositionSaver.xmlSchema = XMLSchema.new("toolPositionSaver")
+	ToolPositionSaver.xmlSchema:register(XMLValueType.BOOL, ToolPositionSaver.xmlKeyBindings, "Should the keybinding be displayed?")
+
+	ToolPositionSaver.baseDir = getUserProfileAppPath() .. "modSettings/" .. ToolPositionSaver.MOD_NAME ..  "/"
+	createFolder(ToolPositionSaver.baseDir)
+	ToolPositionSaver.filePath = ToolPositionSaver.baseDir.."ToolPositionSaver.xml"
+end
+ToolPositionSaver.init()
+
+function ToolPositionSaver.saveUserSettings()
+	local xmlFile = XMLFile.create("xmlFile",ToolPositionSaver.filePath, ToolPositionSaver.baseXmlKey, ToolPositionSaver.xmlSchema)
+	if xmlFile then 
+		xmlFile:setValue(ToolPositionSaver.xmlKeyBindings, ToolPositionSaver.showKeyBindings)
+		xmlFile:save()
+		xmlFile:delete()
+	end
+end
+FSCareerMissionInfo.saveToXMLFile = Utils.appendedFunction(FSCareerMissionInfo.saveToXMLFile,ToolPositionSaver.saveUserSettings)
+
+function ToolPositionSaver.loadUserSettings()
+	local xmlFile = XMLFile.loadIfExists("cpXmlFile", ToolPositionSaver.filePath, ToolPositionSaver.xmlSchema)
+	if xmlFile then
+		ToolPositionSaver.showKeyBindings = xmlFile:getValue(ToolPositionSaver.xmlKeyBindings)
+		xmlFile:delete()
+	end
+end
+BaseMission.loadMapFinished = Utils.appendedFunction(BaseMission.loadMapFinished,ToolPositionSaver.loadUserSettings)
+
 
 function ToolPositionSaver.initSpecialization()
 	local schema = Vehicle.xmlSchemaSavegame
@@ -86,6 +120,9 @@ function ToolPositionSaver:onLoad(savegame)
 		modeReset = g_i18n:getText("TPS_MODE_RESET"),
 		modeSetPlayWarning = g_i18n:getText("TPS_MODE_CHANGED_TO_SET_PLAY"),
 		modeResetWarning = g_i18n:getText("TPS_MODE_CHANGED_TO_RESET"),
+		active = g_i18n:getText("TPS_KEYBINDINGS_ACTIVATED"),
+		disabled = g_i18n:getText("TPS_KEYBINDINGS_DEACTIVATED"),
+		keyBindingVisibility = g_i18n:getText("TPS_KEYBINDINGS_VISIBLE"),
 	}	
 end
 
@@ -170,6 +207,10 @@ function ToolPositionSaver:onRegisterActionEvents(isActiveForInput, isActiveForI
 				
 				_, actionEventId = self:addActionEvent(spec.actionEvents, InputAction.TPS_CHANGE_MODE, self, ToolPositionSaver.actionEventChangeMode, false, true, false, true)
 				g_inputBinding:setActionEventTextPriority(actionEventId, GS_PRIO_NORMAL)
+
+				_, actionEventId = self:addActionEvent(spec.actionEvents, InputAction.TPS_SHOW_KEYBINDING, self, ToolPositionSaver.actionEventChangeKeybindingVisibility, false, true, false, true)
+				g_inputBinding:setActionEventTextPriority(actionEventId, GS_PRIO_NORMAL)
+				
 				ToolPositionSaver.updateActionEventState(self)
 			end
 		end
@@ -212,9 +253,9 @@ function ToolPositionSaver:updateActionEventState()
 			end
 		end
 	end
-
+	local eventTextVisible = ToolPositionSaver.showKeyBindings
 	for i=1,ToolPositionSaver.NUM_OF_POSITIONS do 
-		local actionEvent = spec.actionEvents[InputAction[string.format("TPS_POSITION_%d",i)]]
+		local actionEvent = spec.actionEvents[InputAction[string.format("TPS_POSITION_%d", i)]]
 		local text,isActive = "",true
 		if spec.mode == ToolPositionSaver.MODE_SET_PLAY then 
 			text = spec.hasPositions[i] and spec.texts.playPosition or spec.texts.setPosition
@@ -222,13 +263,26 @@ function ToolPositionSaver:updateActionEventState()
 			text = spec.texts.resetPosition
 			isActive = spec.hasPositions[i]
 		end
-		g_inputBinding:setActionEventText(actionEvent.actionEventId, string.format(text,i))
+		g_inputBinding:setActionEventText(actionEvent.actionEventId, string.format(text, i))
 		g_inputBinding:setActionEventActive(actionEvent.actionEventId,isActive and hasMoveableTools)
+		g_inputBinding:setActionEventTextVisibility(actionEvent.actionEventId, eventTextVisible)
 	end
 	local actionEvent = spec.actionEvents[InputAction.TPS_CHANGE_MODE]
 	local text = spec.mode == ToolPositionSaver.MODE_SET_PLAY and spec.texts.modeSetPlay or spec.texts.modeReset
 	g_inputBinding:setActionEventText(actionEvent.actionEventId, text)
 	g_inputBinding:setActionEventActive(actionEvent.actionEventId,hasMoveableTools)
+	g_inputBinding:setActionEventTextVisibility(actionEvent.actionEventId, eventTextVisible)
+
+	actionEvent = spec.actionEvents[InputAction.TPS_SHOW_KEYBINDING]
+	text = string.format(spec.texts.keyBindingVisibility, eventTextVisible and spec.texts.active or spec.texts.disabled)
+	g_inputBinding:setActionEventText(actionEvent.actionEventId, text)
+	g_inputBinding:setActionEventActive(actionEvent.actionEventId,hasMoveableTools)
+
+end
+
+function ToolPositionSaver.actionEventChangeKeybindingVisibility(self, actionName, inputValue, callbackState, isAnalog)
+	ToolPositionSaver.showKeyBindings = not ToolPositionSaver.showKeyBindings
+	ToolPositionSaver.updateActionEventState(self)
 end
 
 function ToolPositionSaver.actionEventChangePosition(self, actionName, inputValue, callbackState, isAnalog)
@@ -546,8 +600,6 @@ end
 function ToolPositionSaverEvent.sendResetEvent(vehicle,positionIx)
 	ToolPositionSaverEvent.sendEvent(vehicle,ToolPositionSaverEvent.RESET,positionIx)
 end
-
-
 
 function ToolPositionSaverEvent.sendSetEvent(vehicle,positionIx)
 	ToolPositionSaverEvent.sendEvent(vehicle,ToolPositionSaverEvent.SET,positionIx)

@@ -92,6 +92,9 @@ Steuerung Links + 5
 		<actionBinding action="TPS_CHANGE_MODE">
 			<binding device="KB_MOUSE_DEFAULT" input="KEY_lctrl KEY_5" />
 		</actionBinding>
+		<actionBinding action="TPS_SHOW_KEYBINDING">
+			<binding device="KB_MOUSE_DEFAULT" input="KEY_lctrl KEY_6" />
+		</actionBinding>
     </inputBinding>	
 
 	<actions>
@@ -100,6 +103,7 @@ Steuerung Links + 5
 		<action name="TPS_POSITION_3" />
 		<action name="TPS_POSITION_4" />
 		<action name="TPS_CHANGE_MODE" />
+		<action name="TPS_SHOW_KEYBINDING" />
 	</actions>
 
 	<l10n>	
@@ -112,11 +116,16 @@ Steuerung Links + 5
 		<text name="TPS_MODE_CHANGED_TO_SET_PLAY"><de>TPS: Modus auf Setzen/anfahren geändert.</de><en>TPS: Change mode.</en></text>
 		<text name="TPS_MODE_CHANGED_TO_RESET"><de>TPS: Modus auf reset geändert.</de><en>TPS: Change mode.</en></text>
 
+		<text name="TPS_KEYBINDINGS_VISIBLE"><de>TPS: Keybindings %s</de><en>TPS: Keybindings %s</en></text>
+		<text name="TPS_KEYBINDINGS_ACTIVATED"><de>active</de><en>active</en></text>
+		<text name="TPS_KEYBINDINGS_DEACTIVATED"><de>disabled</de><en>disabled</en></text>
+
 		<text name="input_TPS_POSITION_1"><de>TPS: Anfahren oder Setzen der 1 Position.</de><en>TPS: Play or set the 1 position.</en></text>
 		<text name="input_TPS_POSITION_2"><de>TPS: Anfahren oder Setzen der 2 Position.</de><en>TPS: Play or set the 2 position.</en></text>
 		<text name="input_TPS_POSITION_3"><de>TPS: Anfahren oder Setzen der 3 Position.</de><en>TPS: Play or set the 3 position.</en></text>
 		<text name="input_TPS_POSITION_4"><de>TPS: Anfahren oder Setzen der 4 Position.</de><en>TPS: Play or set the 4 position.</en></text>	
 		<text name="input_TPS_CHANGE_MODE"><de>TPS: Ändert ausgewählte Modus.</de><en>TPS: Changes mode.</en></text>
+		<text name="input_TPS_SHOW_KEYBINDING"><de>TPS: Ändert ausgewählte Modus.</de><en>TPS: Changes input text visibility.</en></text>
 	</l10n>
 	
 </modDesc>
