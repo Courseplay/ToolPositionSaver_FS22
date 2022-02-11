@@ -18,6 +18,7 @@ function ToolPositionSaver.initSpecialization()
 	schema:register(XMLValueType.INT, "vehicles.vehicle(?)" .. toolKey .. "position(?)#index","PositionIndex")
 	schema:register(XMLValueType.ANGLE, "vehicles.vehicle(?)" .. toolKey .. "position(?).movingTool(?)#curRot", "Rotation saved.")
 	schema:register(XMLValueType.FLOAT, "vehicles.vehicle(?)" .. toolKey .. "position(?).movingTool(?)#curTrans", "Translation saved.")
+	schema:register(XMLValueType.FLOAT, "vehicles.vehicle(?)" .. toolKey .. "position(?).movingTool(?)#curAnimTime", "Animation time saved.")
 end
 
 function ToolPositionSaver.prerequisitesPresent(specializations)
@@ -98,6 +99,7 @@ function ToolPositionSaver:loadPositionsFromXml(savegame)
 			spec.positions[index][i] = {}
 			spec.positions[index][i].curTrans =  savegame.xmlFile:getValue(k.."#curTrans")
 			spec.positions[index][i].curRot =  savegame.xmlFile:getValue(k.."#curRot")
+			spec.positions[index][i].curAnimTime =  savegame.xmlFile:getValue(k.."#curAnimTime")
 			spec.hasPositions[index] = true
 		end)
 	end)
@@ -117,6 +119,9 @@ function ToolPositionSaver:saveToXMLFile(xmlFile, key, usedModNames)
 			end
 			if tool.curRot ~= nil then
 				xmlFile:setValue(toolKey .. "#curRot", tool.curRot)
+			end	
+			if tool.curAnimTime ~= nil then
+				xmlFile:setValue(toolKey .. "#curAnimTime", tool.curAnimTime)
 			end	
 		end
 		j = j + 1
@@ -276,6 +281,7 @@ function ToolPositionSaver:onTpsSetPositions(positionIx)
 		spec.positions[positionIx][toolIndex] = {}
 		spec.positions[positionIx][toolIndex].curRot = tool.curRot[tool.rotationAxis]
 		spec.positions[positionIx][toolIndex].curTrans = tool.curTrans[tool.translationAxis]
+		spec.positions[positionIx][toolIndex].curAnimTime = tool.curAnimTime
 	end
 end
 
@@ -348,7 +354,8 @@ function ToolPositionSaver.updateToolPositions(object,dt)
 			if object:getIsMovingToolActive(tool) and positions[toolIndex] then 
 				local isRotating = ToolPositionSaver.checkToolRotation(object,tool,positions[toolIndex],dt) 
 				local isMoving = ToolPositionSaver.checkToolTranslation(object,tool,positions[toolIndex],dt)
-				isDirty = isDirty or isRotating or isMoving
+				local isPlaying = ToolPositionSaver.checkToolAnimation(object,tool,positions[toolIndex],dt)	
+				isDirty = isDirty or isRotating or isMoving or isPlaying
 			end
 		end
 	end
@@ -415,6 +422,34 @@ function ToolPositionSaver.checkToolTranslation(object,tool,position,dt)
 	end
 	ToolPositionSaver.debugVehicle(object,"TransDiff: %.2f, TransSpeed: %.2f",diff,transSpeed)
 	if Cylindered.setToolTranslation(object, tool, transSpeed, dt) then
+		Cylindered.setDirty(object, tool)
+	end
+	object:raiseDirtyFlags(spec.cylinderedDirtyFlag)
+	return true,math.abs(diff)
+end
+
+--- Updates animation for a tool.
+---@param object table vehicle or implement
+---@param tool table part of object.movingTools
+---@param position table position index to move.
+---@param dt number
+function ToolPositionSaver.checkToolAnimation(object,tool,position,dt)	
+	local spec = object.spec_cylindered
+	if tool.animSpeed == nil or position.curAnimTime == nil then
+		return false,0
+	end
+	local newAnimTime = tool.curAnimTime
+	local diff =  position.curAnimTime - newAnimTime
+	local speed = MathUtil.clamp(diff,ToolPositionSaver.MIN_TRANS_SPEED,ToolPositionSaver.MAX_TRANS_SPEED)*tool.animSpeed
+	if diff < 0 then
+		speed=speed*(-1)
+	end
+	if math.abs(diff) < 0.03 or speed == 0 then
+		tool.move = 0
+		return false,0
+	end
+	ToolPositionSaver.debugVehicle(object,"Anim speed diff: %.2f, anim speed: %.2f",diff,speed)
+	if Cylindered.setToolAnimation(object, tool, speed, dt) then
 		Cylindered.setDirty(object, tool)
 	end
 	object:raiseDirtyFlags(spec.cylinderedDirtyFlag)
