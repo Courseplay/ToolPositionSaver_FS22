@@ -4,6 +4,7 @@
 	<author><![CDATA[Courseplay.devTeam]]></author>
 	<title>
 		<en>Tool Position Saver</en>
+		<jp>ツールポジションセーバー</jp>
 	</title>
 
     <description>
@@ -131,25 +132,25 @@ Changelog 1.0.1.0:
 	</actions>
 
 	<l10n>	
-		<text name="TPS_SET_POSITION"><de>TPS: Setze Position %d</de><en>TPS: Set position %d</en></text>	
-		<text name="TPS_PLAY_POSITION"><de>TPS: Fahre Position %d an.</de><en>TPS: Play position %d.</en></text>	
-		<text name="TPS_RESET_POSITION"><de>TPS: Positionen %d zurücksetzen.</de><en>TPS: Reset positions %d.</en></text>
-		<text name="TPS_MODE_SET_PLAY"><de>TPS: Ändert Modus(Setzen/anfahren).</de><en>TPS: Change mode.</en></text>
-		<text name="TPS_MODE_RESET"><de>TPS: Ändert Modus(Zurücksetzen).</de><en>TPS: Change mode.</en></text>
+		<text name="TPS_SET_POSITION"><de>TPS: Setze Position %d</de><en>TPS: Set position %d</en><jp>ツールポジション%d(セーブ)</jp></text>	
+		<text name="TPS_PLAY_POSITION"><de>TPS: Fahre Position %d an.</de><en>TPS: Play position %d.</en><jp>ツールポジション%d(ロード)</jp></text>	
+		<text name="TPS_RESET_POSITION"><de>TPS: Positionen %d zurücksetzen.</de><en>TPS: Reset positions %d.</en><jp>ツールポジション %d (リセット)</jp></text>
+		<text name="TPS_MODE_SET_PLAY"><de>TPS: Ändert Modus(Setzen/anfahren).</de><en>TPS: Change mode.</en><jp>ツールポジション:モードチェンジ</jp></text>
+		<text name="TPS_MODE_RESET"><de>TPS: Ändert Modus(Zurücksetzen).</de><en>TPS: Change mode.</en><jp>ツールポジション:モードチェンジ</jp></text>
 		
-		<text name="TPS_MODE_CHANGED_TO_SET_PLAY"><de>TPS: Modus auf Setzen/anfahren geändert.</de><en>TPS: Change mode.</en></text>
-		<text name="TPS_MODE_CHANGED_TO_RESET"><de>TPS: Modus auf reset geändert.</de><en>TPS: Change mode.</en></text>
+		<text name="TPS_MODE_CHANGED_TO_SET_PLAY"><de>TPS: Modus auf Setzen/anfahren geändert.</de><en>TPS: Change mode.</en><jp>ツールポジション:モードチェンジ</jp></text>
+		<text name="TPS_MODE_CHANGED_TO_RESET"><de>TPS: Modus auf reset geändert.</de><en>TPS: Change mode.</en><jp>ツールポジション:モードチェンジ</jp></text>
 
-		<text name="TPS_KEYBINDINGS_VISIBLE"><de>TPS: Tastenbelegung %s</de><en>TPS: %s keybindings</en></text>
-		<text name="TPS_KEYBINDINGS_ACTIVATED"><de>ausblenden</de><en>Show</en></text>
-		<text name="TPS_KEYBINDINGS_DEACTIVATED"><de>anzeigen</de><en>Hide</en></text>
+		<text name="TPS_KEYBINDINGS_VISIBLE"><de>TPS: Tastenbelegung %s</de><en>TPS: %s keybindings</en><jp>ツールポジション キー %s</jp></text>
+		<text name="TPS_KEYBINDINGS_ACTIVATED"><de>ausblenden</de><en>Show</en><jp>表示</jp></text>
+		<text name="TPS_KEYBINDINGS_DEACTIVATED"><de>anzeigen</de><en>Hide</en><jp>非表示</jp></text>
 
-		<text name="input_TPS_POSITION_1"><de>TPS: Anfahren oder Setzen der 1 Position.</de><en>TPS: Play or set the 1 position.</en></text>
-		<text name="input_TPS_POSITION_2"><de>TPS: Anfahren oder Setzen der 2 Position.</de><en>TPS: Play or set the 2 position.</en></text>
-		<text name="input_TPS_POSITION_3"><de>TPS: Anfahren oder Setzen der 3 Position.</de><en>TPS: Play or set the 3 position.</en></text>
-		<text name="input_TPS_POSITION_4"><de>TPS: Anfahren oder Setzen der 4 Position.</de><en>TPS: Play or set the 4 position.</en></text>	
-		<text name="input_TPS_CHANGE_MODE"><de>TPS: Ändert ausgewählten Modus.</de><en>TPS: Changes mode.</en></text>
-		<text name="input_TPS_SHOW_KEYBINDING"><de>TPS: Tastenbelegung ein-/ausblenden.</de><en>TPS: Toggle show Keybind.</en></text>
+		<text name="input_TPS_POSITION_1"><de>TPS: Anfahren oder Setzen der 1 Position.</de><en>TPS: Play or set the 1 position.</en><jp>ツールポジション1 セーブ/ロード</jp></text>
+		<text name="input_TPS_POSITION_2"><de>TPS: Anfahren oder Setzen der 2 Position.</de><en>TPS: Play or set the 2 position.</en><jp>ツールポジション2 セーブ/ロード</jp></text>
+		<text name="input_TPS_POSITION_3"><de>TPS: Anfahren oder Setzen der 3 Position.</de><en>TPS: Play or set the 3 position.</en><jp>ツールポジション3 セーブ/ロード</jp></text>
+		<text name="input_TPS_POSITION_4"><de>TPS: Anfahren oder Setzen der 4 Position.</de><en>TPS: Play or set the 4 position.</en><jp>ツールポジション4 セーブ/ロード</jp></text>	
+		<text name="input_TPS_CHANGE_MODE"><de>TPS: Ändert ausgewählten Modus.</de><en>TPS: Changes mode.</en><jp>ツールポジション:モードチェンジ</jp></text>
+		<text name="input_TPS_SHOW_KEYBINDING"><de>TPS: Tastenbelegung ein-/ausblenden.</de><en>TPS: Toggle show Keybind.</en><jp>ツールポジション:キーバインド表示/非表示</jp></text>
 	</l10n>
 	
 </modDesc>
