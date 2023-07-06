@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8" standalone="no" ?>
-<modDesc descVersion="63">
+<modDesc descVersion="75">
     <version>1.0.1.0</version>
 	<author><![CDATA[Courseplay.devTeam]]></author>
 	<title>
 		<en>Tool Position Saver</en>
 		<jp>ツールポジションセーバー</jp>
+		<es>Tool Position Saver</es>
 	</title>
 
     <description>
@@ -92,6 +93,48 @@ Changelog 1.0.1.0:
 
 ]]>
 		</de>
+        <es>
+		<![CDATA[Tool Position Saver - Guarda hasta 4 posicones!
+
+Este mod le permite guardar hasta 4 posiciones, This mod allows you to save up to 4 positions, si al menos un vehículo o implemento tiene controles de ratón activos.
+Por ejemplo una cargadora con pala, una cinta transportadora de una cosechadora de remolacha, una carretilla elevadora, etc....
+
+Con "Fijar Posición X", puede guardar la posición actual en la ranura correspondiente.
+Con la "Iniciar Posición", se jugará la ranura correspondiente.
+
+Con el modo de Alternar se cambia el modo de entrada a ajuste, reproducción de posiciones o borrado de posiciones.
+
+Para errores y comentarios, por favor visita https://github.com/Courseplay/ToolPositionSaver_FS22/ .
+
+Combinaciones de Teclas predefinidas:
+
+Fijar/Iniciar/Borrar posición 1:
+Control Izq. + 1
+
+Fijar/Iniciar/Borrar posición 2:
+Control Izq. + 2
+
+Fijar/Iniciar/Borrar posición 3:
+Control Izq. + 3
+
+Fijar/Iniciar/Borrar posición 4:
+Control Izq. + 4
+
+Changes mode between save/play and delte for the postitions:
+Control Izq. + 5
+
+Toggle show keybinds:
+Control Izq. + 6
+
+Cambios 1.0.1.0:
+- Ahora funciona con carretiras elevadoras
+- Solucionado el problema de compatibilidad con el mod FS22_cultivatorFieldCreator
+- Solucionado el problema de compatibilidad con el mod FS22_aPalletAutoLoader
+- Solucionado el problema con el gancho de Bigbag
+- Añadido tecla para mostrar/ocultar las teclas.
+
+]]>
+		</es>
     </description>
 
 	<iconFilename>Icon_ToolPositionSaver.dds</iconFilename>
@@ -132,25 +175,117 @@ Changelog 1.0.1.0:
 	</actions>
 
 	<l10n>	
-		<text name="TPS_SET_POSITION"><de>TPS: Setze Position %d</de><en>TPS: Set position %d</en><jp>ツールポジション%d(セーブ)</jp></text>	
-		<text name="TPS_PLAY_POSITION"><de>TPS: Fahre Position %d an.</de><en>TPS: Play position %d.</en><jp>ツールポジション%d(ロード)</jp></text>	
-		<text name="TPS_RESET_POSITION"><de>TPS: Positionen %d zurücksetzen.</de><en>TPS: Reset positions %d.</en><jp>ツールポジション %d (リセット)</jp></text>
-		<text name="TPS_MODE_SET_PLAY"><de>TPS: Ändert Modus(Setzen/anfahren).</de><en>TPS: Change mode.</en><jp>ツールポジション:モードチェンジ</jp></text>
-		<text name="TPS_MODE_RESET"><de>TPS: Ändert Modus(Zurücksetzen).</de><en>TPS: Change mode.</en><jp>ツールポジション:モードチェンジ</jp></text>
+		<text name="TPS_SET_POSITION">
+			<de>TPS: Setze Position %d</de>
+			<en>TPS: Set position %d</en>
+			<jp>ツールポジション%d(セーブ)</jp>
+			<es>TPS: Fijar Posición %d</es>
+		</text>	
 		
-		<text name="TPS_MODE_CHANGED_TO_SET_PLAY"><de>TPS: Modus auf Setzen/anfahren geändert.</de><en>TPS: Change mode.</en><jp>ツールポジション:モードチェンジ</jp></text>
-		<text name="TPS_MODE_CHANGED_TO_RESET"><de>TPS: Modus auf reset geändert.</de><en>TPS: Change mode.</en><jp>ツールポジション:モードチェンジ</jp></text>
+		<text name="TPS_PLAY_POSITION">
+			<de>TPS: Fahre Position %d an.</de>
+			<en>TPS: Play position %d.</en>
+			<jp>ツールポジション%d(ロード)</jp>
+			<es>TPS: Iniciar Posicion %d.</es>
+		</text>	
+		
+		<text name="TPS_RESET_POSITION">
+			<de>TPS: Positionen %d zurücksetzen.</de>
+			<en>TPS: Reset positions %d.</en>
+			<jp>ツールポジション %d (リセット)</jp>
+			<es>TPS: Resetear Posición %d.</es>
+		</text>
+		
+		<text name="TPS_MODE_SET_PLAY">
+			<de>TPS: Ändert Modus(Setzen/anfahren).</de>
+			<en>TPS: Change mode.</en>
+			<jp>ツールポジション:モードチェンジ</jp>
+			<es>TPS: Cambiar Modo (Fijar/Iniciar).</es>
+		</text>
+		
+		<text name="TPS_MODE_RESET">
+			<de>TPS: Ändert Modus(Zurücksetzen).</de>
+			<en>TPS: Change mode.</en>
+			<jp>ツールポジション:モードチェンジ</jp>
+			<es>TPS: Cambia de modo(Reset)</es>
+		</text>
+		
+		<text name="TPS_MODE_CHANGED_TO_SET_PLAY">
+			<de>TPS: Modus auf Setzen/anfahren geändert.</de>
+			<en>TPS: Change mode.</en>
+			<jp>ツールポジション:モードチェンジ</jp>
+			<es>TPS: Modo Cambiado a Fijar/Iniciar</es>
+		</text>
+		
+		<text name="TPS_MODE_CHANGED_TO_RESET">
+			<de>TPS: Modus auf reset geändert.</de>
+			<en>TPS: Change mode.</en>
+			<jp>ツールポジション:モードチェンジ</jp>
+			<es>TPS: Modo Cambiado a Reset.</es>
+		</text>
 
-		<text name="TPS_KEYBINDINGS_VISIBLE"><de>TPS: Tastenbelegung %s</de><en>TPS: %s keybindings</en><jp>ツールポジション キー %s</jp></text>
-		<text name="TPS_KEYBINDINGS_ACTIVATED"><de>ausblenden</de><en>Show</en><jp>表示</jp></text>
-		<text name="TPS_KEYBINDINGS_DEACTIVATED"><de>anzeigen</de><en>Hide</en><jp>非表示</jp></text>
+		<text name="TPS_KEYBINDINGS_VISIBLE">
+			<de>TPS: Tastenbelegung %s</de>
+			<en>TPS: %s keybindings</en>
+			<jp>ツールポジション キー %s</jp>
+			<es>TPS: Asignación Teclas %s</es>
+		</text>
+		
+		<text name="TPS_KEYBINDINGS_ACTIVATED">
+			<de>ausblenden</de>
+			<en>Show</en>
+			<jp>表示</jp>
+			<es>Mostrar</es>
+		</text>
+		
+		<text name="TPS_KEYBINDINGS_DEACTIVATED">
+			<de>anzeigen</de>
+			<en>Hide</en>
+			<jp>非表示</jp>
+			<es>Ocultar</es>
+		</text>
 
-		<text name="input_TPS_POSITION_1"><de>TPS: Anfahren oder Setzen der 1 Position.</de><en>TPS: Play or set the 1 position.</en><jp>ツールポジション1 セーブ/ロード</jp></text>
-		<text name="input_TPS_POSITION_2"><de>TPS: Anfahren oder Setzen der 2 Position.</de><en>TPS: Play or set the 2 position.</en><jp>ツールポジション2 セーブ/ロード</jp></text>
-		<text name="input_TPS_POSITION_3"><de>TPS: Anfahren oder Setzen der 3 Position.</de><en>TPS: Play or set the 3 position.</en><jp>ツールポジション3 セーブ/ロード</jp></text>
-		<text name="input_TPS_POSITION_4"><de>TPS: Anfahren oder Setzen der 4 Position.</de><en>TPS: Play or set the 4 position.</en><jp>ツールポジション4 セーブ/ロード</jp></text>	
-		<text name="input_TPS_CHANGE_MODE"><de>TPS: Ändert ausgewählten Modus.</de><en>TPS: Changes mode.</en><jp>ツールポジション:モードチェンジ</jp></text>
-		<text name="input_TPS_SHOW_KEYBINDING"><de>TPS: Tastenbelegung ein-/ausblenden.</de><en>TPS: Toggle show Keybind.</en><jp>ツールポジション:キーバインド表示/非表示</jp></text>
+		<text name="input_TPS_POSITION_1">
+			<de>TPS: Anfahren oder Setzen der 1 Position.</de>
+			<en>TPS: Play or set the 1 position.</en>
+			<jp>ツールポジション1 セーブ/ロード</jp>
+			<es>TPS: Aproximar/Fijar Posición 1</es>
+		</text>
+		
+		<text name="input_TPS_POSITION_2">
+			<de>TPS: Anfahren oder Setzen der 2 Position.</de>
+			<en>TPS: Play or set the 2 position.</en>
+			<jp>ツールポジション2 セーブ/ロード</jp>
+			<es>TPS: Aproximar/Fijar Posición 2</es>
+		</text>
+		
+		<text name="input_TPS_POSITION_3">
+			<de>TPS: Anfahren oder Setzen der 3 Position.</de>
+			<en>TPS: Play or set the 3 position.</en>
+			<jp>ツールポジション3 セーブ/ロード</jp>
+			<es>TPS: Aproximar/Fijar Posición 3</es>
+		</text>
+		
+		<text name="input_TPS_POSITION_4">
+			<de>TPS: Anfahren oder Setzen der 4 Position.</de>
+			<en>TPS: Play or set the 4 position.</en>
+			<jp>ツールポジション4 セーブ/ロード</jp>
+			<es>TPS: Aproximar/Fijar Posición 4</es>
+		</text>	
+		
+		<text name="input_TPS_CHANGE_MODE">
+			<de>TPS: Ändert ausgewählten Modus.</de>
+			<en>TPS: Changes mode.</en>
+			<jp>ツールポジション:モードチェンジ</jp>
+			<es>TPS: Cambia Modo Seleccionado.</es>
+		</text>
+		
+		<text name="input_TPS_SHOW_KEYBINDING">
+			<de>TPS: Tastenbelegung ein-/ausblenden.</de>
+			<en>TPS: Toggle show Keybind.</en>
+			<jp>ツールポジション:キーバインド表示/非表示</jp>
+			<es>TPS: Mostrar/Ocultar Teclas Asignadas.</es>
+		</text>
 	</l10n>
 	
 </modDesc>
